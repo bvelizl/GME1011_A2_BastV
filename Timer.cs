@@ -30,13 +30,22 @@ namespace GME1011_A2_BastV
         }
 
 
-        //Here is my argumented constructor.
+        //Here is my argumented constructor. Now encapsulated.
         public Timer(int setTimer, bool countdown)
         {
-            _setTimer = 120;
-            _currentTime = 120;
+            if(_setTimer < 60)
+                _setTimer = 60;
+            else
+                _setTimer = setTimer;
+
+            if (_setTimer > 300)
+                _setTimer = 300;
+            else
+                _setTimer = setTimer;
+
+            _currentTime = setTimer;
             _isRunning = false;
-            _countdown = false;
+            _countdown = countdown;
         }
 
 
