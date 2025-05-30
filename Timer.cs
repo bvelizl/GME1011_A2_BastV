@@ -81,6 +81,22 @@ namespace GME1011_A2_BastV
         {
             _setTimer -= 60;
         }
+
+        //This is my idea of how update could work.
+        /*
+         * protected override void Update(GameTime gameTime.totalGameTime.Seconds)
+         * if(_isRunning = true && _countdown = true)
+         * _currentTime --;
+         * if(_currentTime == 0)
+         * _isRunning = false;
+         * 
+         * if(_isRunning = true && _countdown = false)
+         * _currentTime == 0;
+         * _currentTime ++;
+         * if(_currentTime == _setTimer)
+         * _isRunning = false;
+         * 
+         */
     }
 
 
