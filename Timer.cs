@@ -16,25 +16,24 @@ namespace GME1011_A2_BastV
         private int _setTimer, _currentTime;
         private bool _isRunning, _countdown;
         private Vector2 _location;
-        private List<Texture2D> _texture;
+        private Texture2D _texture;
         private SpriteFont _clockFont;
 
 
-        //Here is my zero-argument constructor.
-        public Timer()
+        //Here are my constructors. Now encapsulated.
+        public Timer(Vector2 location, SpriteFont font,Texture2D clock, int setTimer, bool isRunning, bool countdown)
         {
+            _location = location;
+            _clockFont = font;
+            _texture = clock;
+
             _setTimer = 120;
-            _currentTime = 120;
-            _isRunning = false;
-            _countdown = true;
-        }
+            _currentTime = setTimer;
+            _isRunning = isRunning;
+            _countdown = countdown;
 
-
-        //Here is my argumented constructor. Now encapsulated.
-        public Timer(int setTimer, bool countdown)
-        {
             if (_setTimer < 60)
-                _setTimer = 60;
+                setTimer = 60;
             else
                 _setTimer = setTimer;
 
@@ -42,10 +41,6 @@ namespace GME1011_A2_BastV
                 _setTimer = 300;
             else
                 _setTimer = setTimer;
-
-            _currentTime = setTimer;
-            _isRunning = false;
-            _countdown = countdown;
         }
 
 
@@ -84,7 +79,7 @@ namespace GME1011_A2_BastV
 
         //This is my idea of how update could work.
 
-        private void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -104,6 +99,15 @@ namespace GME1011_A2_BastV
             }
                 
         }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw()
+
+            spriteBatch.End();
+        }
+
 
     }
 
