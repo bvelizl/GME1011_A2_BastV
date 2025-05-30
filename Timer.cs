@@ -26,14 +26,14 @@ namespace GME1011_A2_BastV
             _setTimer = 120;
             _currentTime = 120;
             _isRunning = false;
-            _countdown = false;
+            _countdown = true;
         }
 
 
         //Here is my argumented constructor. Now encapsulated.
         public Timer(int setTimer, bool countdown)
         {
-            if(_setTimer < 60)
+            if (_setTimer < 60)
                 _setTimer = 60;
             else
                 _setTimer = setTimer;
@@ -83,20 +83,28 @@ namespace GME1011_A2_BastV
         }
 
         //This is my idea of how update could work.
-        /*
-         * protected override void Update(GameTime gameTime.totalGameTime.Seconds)
-         * if(_isRunning = true && _countdown = true)
-         * _currentTime --;
-         * if(_currentTime == 0)
-         * _isRunning = false;
-         * 
-         * if(_isRunning = true && _countdown = false)
-         * _currentTime == 0;
-         * _currentTime ++;
-         * if(_currentTime == _setTimer)
-         * _isRunning = false;
-         * 
-         */
+
+        private void Update(GameTime gameTime)
+        {
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                _isRunning = true;
+
+            if (_isRunning == true && _countdown == true)
+            {
+                for (_currentTime = _setTimer; _currentTime > 0; _currentTime--)
+                    _isRunning = false;
+            }
+                
+
+            else if (_isRunning == true && _countdown == false)
+            {
+                for (_currentTime = 0; _currentTime < _setTimer; _currentTime++)
+                    _isRunning = false;
+            }
+                
+        }
+
     }
 
 
