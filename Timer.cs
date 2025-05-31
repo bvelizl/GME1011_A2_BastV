@@ -15,7 +15,6 @@ namespace GME1011_A2_BastV
     {
 
         //Here I declare my attributes.
-        private GraphicsDeviceManager _graphics;
         private int _setTimer, _currentTime;
         private bool _isRunning, _countdown;
         private Vector2 _location, _textLocation, _addLocation, _subLocation, _modeLocation, _runningLocation, _chronometerLocation;
@@ -37,7 +36,7 @@ namespace GME1011_A2_BastV
             _time = TimeSpan.Zero;
 
             //Code to manually positionate the buttons. This will make the textures
-            //get printed in the right position, no matter how many times we instantiate the object.
+            //get printed in the right position, no matter how many times I instantiate the object.
             _addLocation = new Vector2(149, 95);
             _subLocation = new Vector2(31, 95);
             _modeLocation = new Vector2(80, 130);
@@ -82,6 +81,11 @@ namespace GME1011_A2_BastV
             return _countdown;
         }
 
+        public Vector2 GetLocation()
+        {
+            return _location;
+        }
+
 
         //Here are my mutator methods.
         public void Add()
@@ -102,6 +106,8 @@ namespace GME1011_A2_BastV
                 _countdown = true;
         }
 
+        //Mutator responsible to modify _currentTime according to the timer's mode.
+        //Also, _time = TimeSpan.Zero; Makes the timer starts from 0, no matter how long it takes me to press space.
         public void Run()
         {
             _isRunning = true;
@@ -124,7 +130,8 @@ namespace GME1011_A2_BastV
             _chronometer = content.Load<Texture2D>("chronometer");
         }
 
-        //This is my idea of how update could work.
+        //Update. Making it works in seconds instead of frames.
+        //_time -= TimeSpan.FromSeconds(1); Helps me to subtract 1 once _time reaches 1. That way, it always work from 0 to 1.
 
         public void Update(GameTime gameTime)
         {
@@ -146,34 +153,31 @@ namespace GME1011_A2_BastV
 
                 }
 
-            }
+                if (_isRunning == true && _countdown == false)
+                {
+                    _currentTime++;
+                    if (_currentTime == _setTimer)
+                        _isRunning = false;
+                }
 
 
-                
+                //Creating hitbox rectangle for the buttons. Perfectly working!
+                Rectangle _addHitbox = new Rectangle((int)(_location.X + _addLocation.X), (int)(_location.Y + _addLocation.Y), _addButton.Width, _addButton.Height);
+                Rectangle _subHitbox = new Rectangle((int)(_location.X + _subLocation.X), (int)(_location.Y + _subLocation.Y), _subButton.Width, _subButton.Height);
+                Rectangle _modeHitbox = new Rectangle((int)(_location.X + _modeLocation.X), (int)(_location.Y + _modeLocation.Y), _modeButton.Width, _modeButton.Height);
 
-            else if (_isRunning == true && _countdown == false)
-            {
-                for (_currentTime = 0; _currentTime < _setTimer; _currentTime++)
-                    _isRunning = false;
-            }
+                //Making buttons work with mouse.
+                MouseState currentMouseState = Mouse.GetState();
+                if (currentMouseState.LeftButton == ButtonState.Pressed)
+                {
+                    if (_addHitbox.Contains(currentMouseState.Position))
+                        this.Add();
+                    if (_subHitbox.Contains(currentMouseState.Position))
+                        this.Subtract();
+                    if (_modeHitbox.Contains(currentMouseState.Position))
+                        this.Mode();
 
-
-            //Creating hitbox rectangle for the buttons. Perfectly working!
-            Rectangle _addHitbox = new Rectangle((int)(_location.X + _addLocation.X), (int)(_location.Y + _addLocation.Y), _addButton.Width, _addButton.Height);
-            Rectangle _subHitbox = new Rectangle((int)(_location.X + _subLocation.X), (int)(_location.Y + _subLocation.Y), _subButton.Width, _subButton.Height);
-            Rectangle _modeHitbox = new Rectangle((int)(_location.X + _modeLocation.X), (int)(_location.Y + _modeLocation.Y), _modeButton.Width, _modeButton.Height);
-
-            //Making buttons work with mouse.
-            MouseState currentMouseState = Mouse.GetState();
-            if(currentMouseState.LeftButton == ButtonState.Pressed)
-            {
-                if (_addHitbox.Contains(currentMouseState.Position))
-                    this.Add();
-                if (_subHitbox.Contains(currentMouseState.Position))
-                    this.Subtract();
-                if (_modeHitbox.Contains(currentMouseState.Position))
-                    this.Mode();
-
+                }
             }
 
         }
@@ -183,6 +187,7 @@ namespace GME1011_A2_BastV
             spriteBatch.Begin();
             spriteBatch.Draw(_texture, _location, Color.White);
 
+            //Printing strings according to the mode of the timer. Also changing from white to red if it is running or not.
             if (_isRunning == true)
                 spriteBatch.DrawString(_clockFont, _currentTime + "", _textLocation, Color.Red);
             else

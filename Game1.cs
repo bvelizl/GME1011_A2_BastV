@@ -41,6 +41,7 @@ namespace GME1011_A2_BastV
             _chronometer = Content.Load<Texture2D>("chronometer");
 
 
+            //Instantiating two timer objects.
             _timer1 = new Timer(new Vector2(100, 100), new Vector2(180, 189), _font, Content.Load<Texture2D>("Clock"), 40, false, true);
             _timer2 = new Timer(new Vector2(400, 100), new Vector2(480, 189), _font, Content.Load<Texture2D>("Clock"), 120, false, true);
 
@@ -57,7 +58,7 @@ namespace GME1011_A2_BastV
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            // Updating my objects.
 
             _timer1.Update(gameTime);
             _timer2.Update(gameTime);
@@ -67,13 +68,28 @@ namespace GME1011_A2_BastV
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DarkSlateGray);
 
-            // TODO: Add your drawing code here
+            // Drawing my objects.
 
             _timer1.Draw(_spriteBatch);
             _timer2.Draw(_spriteBatch);
 
+            //Calling accessors to show that everything works fine.
+            _spriteBatch.Begin();
+
+            //Information about Timer1
+            _spriteBatch.DrawString(_font, "Timer: " + _timer1.GetSetTimer(), _timer1.GetLocation() + new Vector2(20, 220), Color.Black);
+            _spriteBatch.DrawString(_font, "Running?: " + _timer1.GetIsRunning(), _timer1.GetLocation() + new Vector2(20, 250), Color.Black);
+            _spriteBatch.DrawString(_font, "Countdown: " + _timer1.GetCountdown(), _timer1.GetLocation() + new Vector2(20, 280), Color.Black);
+
+
+            //Information about Timer2
+            _spriteBatch.DrawString(_font, "Timer: " + _timer2.GetSetTimer(), _timer2.GetLocation() + new Vector2(20, 220), Color.DarkGoldenrod);
+            _spriteBatch.DrawString(_font, "Running?: " + _timer2.GetIsRunning(), _timer2.GetLocation() + new Vector2(20, 250), Color.DarkGoldenrod);
+            _spriteBatch.DrawString(_font, "Countdown: " + _timer2.GetCountdown(), _timer2.GetLocation() + new Vector2(20, 280), Color.DarkGoldenrod);
+
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
