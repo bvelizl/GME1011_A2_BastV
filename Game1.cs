@@ -8,6 +8,9 @@ namespace GME1011_A2_BastV
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Timer _timer1, _timer2;
+        private SpriteFont _font;
+        private Texture2D _texture;
 
         public Game1()
         {
@@ -26,6 +29,10 @@ namespace GME1011_A2_BastV
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _font = Content.Load<SpriteFont>("font");
+
+            _timer1 = new Timer(new Vector2(100, 100), new Vector2(180, 189), _font, Content.Load<Texture2D>("Clock"), 120, false, true);
+            _timer2 = new Timer(new Vector2(400, 100), new Vector2(480, 189), _font, Content.Load<Texture2D>("Clock"), 120, false, true);
 
             // TODO: use this.Content to load your game content here
         }
@@ -37,6 +44,9 @@ namespace GME1011_A2_BastV
 
             // TODO: Add your update logic here
 
+            _timer1.Update(gameTime);
+            _timer2.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -45,6 +55,9 @@ namespace GME1011_A2_BastV
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            _timer1.Draw(_spriteBatch);
+            _timer2.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }

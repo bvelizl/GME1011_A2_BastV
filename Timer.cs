@@ -15,17 +15,18 @@ namespace GME1011_A2_BastV
         //Here I declare my attributes.
         private int _setTimer, _currentTime;
         private bool _isRunning, _countdown;
-        private Vector2 _location;
+        private Vector2 _location, _textLocation;
         private Texture2D _texture;
         private SpriteFont _clockFont;
 
 
         //Here are my constructors. Now encapsulated.
-        public Timer(Vector2 location, SpriteFont font,Texture2D clock, int setTimer, bool isRunning, bool countdown)
+        public Timer(Vector2 location, Vector2 textLocation, SpriteFont font,Texture2D texture, int setTimer, bool isRunning, bool countdown)
         {
             _location = location;
+            _textLocation = textLocation;
             _clockFont = font;
-            _texture = clock;
+            _texture = texture;
 
             _setTimer = 120;
             _currentTime = setTimer;
@@ -104,6 +105,12 @@ namespace GME1011_A2_BastV
         {
             spriteBatch.Begin();
             spriteBatch.Draw(_texture, _location, Color.White);
+
+            spriteBatch.DrawString(_clockFont, _setTimer + "", _textLocation, Color.White);
+            if (_isRunning == true)
+                spriteBatch.DrawString(_clockFont, _currentTime + "", _textLocation, Color.Red);
+            else
+                spriteBatch.DrawString(_clockFont, _currentTime + "", _textLocation, Color.White);
             spriteBatch.End();
         }
 
