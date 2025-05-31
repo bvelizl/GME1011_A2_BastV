@@ -132,28 +132,28 @@ namespace GME1011_A2_BastV
 
             //Measuring my three buttons sprites. Add, Subtract, and Mode.
 
-            //_addX = MathHelper.Clamp(_addX, 0, _graphics.PreferredBackBufferWidth - _addButton.Width);
-            //_addY = MathHelper.Clamp(_addY, 0, _graphics.PreferredBackBufferHeight - _addButton.Height);
-            //_subX = MathHelper.Clamp(_subX, 0, _graphics.PreferredBackBufferWidth - _subButton.Width);
-            //_subY = MathHelper.Clamp(_subY, 0, _graphics.PreferredBackBufferHeight - _subButton.Height);
-            //_modeX = MathHelper.Clamp(_modeX, 0, _graphics.PreferredBackBufferWidth - _modeButton.Width);
-            //_modeY = MathHelper.Clamp(_modeY, 0, _graphics.PreferredBackBufferHeight - _modeButton.Height);
+            _addX = MathHelper.Clamp(_addX, 0, _graphics.PreferredBackBufferWidth - _addButton.Width);
+            _addY = MathHelper.Clamp(_addY, 0, _graphics.PreferredBackBufferHeight - _addButton.Height);
+            _subX = MathHelper.Clamp(_subX, 0, _graphics.PreferredBackBufferWidth - _subButton.Width);
+            _subY = MathHelper.Clamp(_subY, 0, _graphics.PreferredBackBufferHeight - _subButton.Height);
+            _modeX = MathHelper.Clamp(_modeX, 0, _graphics.PreferredBackBufferWidth - _modeButton.Width);
+            _modeY = MathHelper.Clamp(_modeY, 0, _graphics.PreferredBackBufferHeight - _modeButton.Height);
 
             //Creating hitbox rectangle for the buttons
-            //Rectangle _addHitbox = new Rectangle((int)_addX, (int)_addY, _addButton.Width, _addButton.Height);
-            //Rectangle _subHitbox = new Rectangle((int)_subX, (int)_subY, _subButton.Width, _subButton.Height);
-            //Rectangle _modeHitbox = new Rectangle((int)_modeX, (int)_modeY, _modeButton.Width, _modeButton.Height);
+            Rectangle _addHitbox = new Rectangle((int)_addX, (int)_addY, _addButton.Width, _addButton.Height);
+            Rectangle _subHitbox = new Rectangle((int)_subX, (int)_subY, _subButton.Width, _subButton.Height);
+            Rectangle _modeHitbox = new Rectangle((int)_modeX, (int)_modeY, _modeButton.Width, _modeButton.Height);
 
             //Making buttons work with mouse.
-            //MouseState currentMouseState = Mouse.GetState();
-            //if(currentMouseState.LeftButton == ButtonState.Pressed)
+            MouseState currentMouseState = Mouse.GetState();
+            if(currentMouseState.LeftButton == ButtonState.Pressed)
             {
-                //if (_addHitbox.Contains(currentMouseState.Position))
-                    //this.Add();
-                //if (_subHitbox.Contains(currentMouseState.Position))
-                    //this.Subtract();
-                //if (_modeHitbox.Contains(currentMouseState.Position))
-                    //this.Mode();
+                if (_addHitbox.Contains(currentMouseState.Position))
+                    this.Add();
+                if (_subHitbox.Contains(currentMouseState.Position))
+                    this.Subtract();
+                if (_modeHitbox.Contains(currentMouseState.Position))
+                    this.Mode();
 
             }
 
