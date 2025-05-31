@@ -41,7 +41,7 @@ namespace GME1011_A2_BastV
             _chronometer = Content.Load<Texture2D>("chronometer");
 
 
-            _timer1 = new Timer(new Vector2(100, 100), new Vector2(180, 189), _font, Content.Load<Texture2D>("Clock"), 120, false, true);
+            _timer1 = new Timer(new Vector2(100, 100), new Vector2(180, 189), _font, Content.Load<Texture2D>("Clock"), 40, false, true);
             _timer2 = new Timer(new Vector2(400, 100), new Vector2(480, 189), _font, Content.Load<Texture2D>("Clock"), 120, false, true);
 
             //Ask why of this.

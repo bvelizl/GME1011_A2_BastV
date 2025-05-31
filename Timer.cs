@@ -23,6 +23,9 @@ namespace GME1011_A2_BastV
         private SpriteFont _clockFont;
         private float _addX, _addY, _subX, _subY, _modeX, _modeY;
 
+        //Trying to apply real time.
+        private TimeSpan _time;
+
 
         //Here are my constructors. Now encapsulated.
         public Timer(Vector2 location, Vector2 textLocation, SpriteFont font,Texture2D texture, int setTimer, bool isRunning, bool countdown)
@@ -31,6 +34,7 @@ namespace GME1011_A2_BastV
             _textLocation = textLocation;
             _clockFont = font;
             _texture = texture;
+            _time = TimeSpan.Zero;
 
             //Code to manually positionate the buttons. This will make the textures
             //get printed in the right position, no matter how many times we instantiate the object.
@@ -40,7 +44,7 @@ namespace GME1011_A2_BastV
             _runningLocation = new Vector2(0, 0);
             _chronometerLocation = new Vector2(0, 0);
 
-            _setTimer = 120;
+            _setTimer = setTimer;
             _currentTime = setTimer;
             _isRunning = isRunning;
             _countdown = countdown;
@@ -51,7 +55,7 @@ namespace GME1011_A2_BastV
                 _setTimer = setTimer;
 
             if (_setTimer > 300)
-                setTimer = 300;
+                _setTimer = 300;
             else
                 _setTimer = setTimer;
         }
@@ -98,6 +102,17 @@ namespace GME1011_A2_BastV
                 _countdown = true;
         }
 
+        public void Run()
+        {
+            _isRunning = true;
+            _time = TimeSpan.Zero;
+
+            if (_countdown == true)
+                _currentTime = _setTimer;
+            else
+                _currentTime = 0;
+        }
+
 
         //This is my loadContent. I think this could work to add textures and print properly the buttons.
         public void LoadContent(ContentManager content)
@@ -113,15 +128,27 @@ namespace GME1011_A2_BastV
 
         public void Update(GameTime gameTime)
         {
+            _time += gameTime.ElapsedGameTime;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                _isRunning = true;
-
-            if (_isRunning == true && _countdown == true)
+            if (_time.TotalSeconds >= 1)
             {
-                for (_currentTime = _setTimer; _currentTime > 0; _currentTime--)
-                    _isRunning = false;
+                _time -= TimeSpan.FromSeconds(1);
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    this.Run();
+
+                if (_isRunning == true && _countdown == true)
+                {
+                    _currentTime--;
+
+                    if (_currentTime <= 0)
+                        _isRunning = false;
+
+                }
+
             }
+
+
                 
 
             else if (_isRunning == true && _countdown == false)
@@ -156,13 +183,14 @@ namespace GME1011_A2_BastV
             spriteBatch.Begin();
             spriteBatch.Draw(_texture, _location, Color.White);
 
-            spriteBatch.DrawString(_clockFont, _setTimer + "", _textLocation, Color.White);
             if (_isRunning == true)
                 spriteBatch.DrawString(_clockFont, _currentTime + "", _textLocation, Color.Red);
             else
-                spriteBatch.DrawString(_clockFont, _currentTime + "", _textLocation, Color.White);
+            {
+                spriteBatch.DrawString(_clockFont, _setTimer + "", _textLocation, Color.White);
                 spriteBatch.Draw(_run, _location + _runningLocation, Color.White);
-
+            }
+                
             if (_countdown == false)
                 spriteBatch.Draw(_chronometer, _location + _chronometerLocation, Color.White);
 
