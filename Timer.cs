@@ -38,7 +38,7 @@ namespace GME1011_A2_BastV
                 _setTimer = setTimer;
 
             if (_setTimer > 300)
-                _setTimer = 300;
+                setTimer = 300;
             else
                 _setTimer = setTimer;
         }
@@ -103,8 +103,7 @@ namespace GME1011_A2_BastV
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw()
-
+            spriteBatch.Draw(_texture, _location, Color.White);
             spriteBatch.End();
         }
 
