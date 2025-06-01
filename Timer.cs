@@ -26,7 +26,7 @@ namespace GME1011_A2_BastV
         private TimeSpan _time;
 
 
-        //Here are my constructors. Now encapsulated.
+        //Here are my constructors.
         public Timer(Vector2 location, Vector2 textLocation, SpriteFont font,Texture2D texture, int setTimer, bool isRunning, bool countdown)
         {
             _location = location;
@@ -48,15 +48,15 @@ namespace GME1011_A2_BastV
             _isRunning = isRunning;
             _countdown = countdown;
 
-            if (_setTimer < 60)
-                setTimer = 60;
-            else
-                _setTimer = setTimer;
 
-            if (_setTimer > 300)
+            //Adding a limit to prevent the timer goes to extreme values.
+            if (_setTimer < 60)
+                _setTimer = 60;
+            else if (_setTimer > 300)
                 _setTimer = 300;
             else
                 _setTimer = setTimer;
+
         }
 
 
@@ -87,15 +87,19 @@ namespace GME1011_A2_BastV
         }
 
 
-        //Here are my mutator methods.
+        //Here are my mutator methods. Updated to prevent _setTimer goes below 60 and higher than 300 seconds.
         public void Add()
         {
             _setTimer += 60;
+            if (_setTimer > 300)
+                _setTimer = 300;
         }
 
         public void Subtract()
         {
             _setTimer -= 60;
+            if (_setTimer < 60)
+                _setTimer = 60;
         }
 
         public void Mode()
